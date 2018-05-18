@@ -1,5 +1,6 @@
 import random
 import string
+import sys
 
 WORDLIST_FILENAME = "words.txt"
 
@@ -9,7 +10,6 @@ class Word:
         self.secretWord = self.loadWords()
         self.lettersGuessed = []
         self.availableLetters = string.ascii_lowercase
-        self.allCharacters= (" 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!#$%&'()*+,-./:;<=>?@[\]^_`{|}~")
 
     def loadOtherWord (self, wordlist):
         while True:
@@ -26,8 +26,14 @@ class Word:
         """
         print"\n"
         print "Loading word list from file..."
-        # inFile: file
-        inFile = open(WORDLIST_FILENAME, 'r', 0)
+        try:
+            # inFile: file
+            inFile = open(WORDLIST_FILENAME, 'r', 0)
+        except IOError:
+            print'File not found, enter with right File!'
+            print 'Exiting...'
+            sys.exit()
+
         # line: string
         line = inFile.readline()
         # wordlist: list of strings
@@ -86,7 +92,7 @@ class Word:
 
 
     def validationLetters(self, letter):
-        if letter in self.allCharacters or letter is "'":
+        if letter not in self.availableLetters:
             print "\n"
             print("*** Sorry your Input is Wrong ***")
             print("*** Try to put a letter!!!***")
@@ -108,7 +114,8 @@ def hangman():
         print 'Available letters: ', word.availableLetters
         letter = raw_input('Please guess a letter: ')
 
-        word.validationLetters(letter)
+        
+
 
         if letter in word.lettersGuessed:
             print 'Oops! You have already guessed that letter: ', word.getGuessedWord()
@@ -117,7 +124,12 @@ def hangman():
             word.lettersGuessed.append(letter)
             print 'Good Guess: ', word.getGuessedWord()
 
-        elif letter is not word.allCharacters:
+        elif letter not in word.availableLetters:
+            print "\n"
+            print("*** Sorry your Input is Wrong ***")
+            print("*** Try to put a letter!!!***")
+               
+        else:
             word.guesses -=1
             word.lettersGuessed.append(letter)
             print 'Oops! That letter is not in my word: ', word.getGuessedWord()
