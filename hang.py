@@ -35,12 +35,19 @@ class Word:
             print 'Exiting...'
             sys.exit()
 
-        # line: string
-        line = inFile.readline()
-        # wordlist: list of strings
-        wordlist = string.split(line)
-        print "  ", len(wordlist), "words loaded."
-        return self.loadOtherWord(wordlist)
+        try :   
+            # line: string
+            line = inFile.readline()
+            # wordlist: list of strings
+            wordlist = string.split(line)
+            print "  ", len(wordlist), "words loaded."
+            return self.loadOtherWord(wordlist)
+        except IndexError:
+            print 'The File with the words is empty!'
+            print 'Put words in the file, so you will can play again.'
+            print 'Exiting...'
+            sys.exit()
+
 
     def getGuessedWord(self):
         guessed = ''
