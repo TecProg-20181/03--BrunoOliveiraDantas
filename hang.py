@@ -92,6 +92,13 @@ class Word:
             print 'Sorry, you ran out of guesses.'
             print 'The word was ', self.secretWord, '.'
 
+    def treatInput(self, letter):
+        #Trata os espacos de entrada
+        letter = ''.join(letter.split())
+        #Trata as letras Maiusculas
+        letter = letter.lower()
+
+        return letter
 
 def hangman():
 
@@ -109,8 +116,8 @@ def hangman():
 
         print 'Available letters: ', word.availableLetters
         letter = raw_input('Please guess a letter: ')
-        letter = ''.join(letter.split())
-        print letter
+
+        letter = word.treatInput(letter)
 
         if letter in word.lettersGuessed:
             print 'Oops! You have already guessed that letter: ', word.getGuessedWord()
@@ -119,7 +126,7 @@ def hangman():
             word.lettersGuessed.append(letter)
             print 'Good Guess: ', word.getGuessedWord()
 
-        elif letter not in word.Available:
+        elif letter not in word.availableLetters:
             print "\n"
             print("*** Sorry your Input is Wrong ***")
             print("*** Try to put one letter!!! ***")
