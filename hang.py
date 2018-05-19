@@ -109,6 +109,8 @@ def hangman():
 
         print 'Available letters: ', word.availableLetters
         letter = raw_input('Please guess a letter: ')
+        letter = ''.join(letter.split())
+        print letter
 
         if letter in word.lettersGuessed:
             print 'Oops! You have already guessed that letter: ', word.getGuessedWord()
@@ -117,10 +119,10 @@ def hangman():
             word.lettersGuessed.append(letter)
             print 'Good Guess: ', word.getGuessedWord()
 
-        elif letter not in word.availableLetters:
+        elif letter not in word.Available:
             print "\n"
             print("*** Sorry your Input is Wrong ***")
-            print("*** Try to put a letter!!! ***")
+            print("*** Try to put one letter!!! ***")
         else:
             word.guesses -= 1
             word.lettersGuessed.append(letter)
