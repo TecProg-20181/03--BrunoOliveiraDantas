@@ -6,13 +6,13 @@ WORDLIST_FILENAME = "words.txt"
 
 
 class Word:
-    def __init__(self, guesses):
+    def __init__(self, guesses=''):
         self.guesses = guesses
         self.secretWord = self.loadWords()
         self.lettersGuessed = []
         self.availableLetters = string.ascii_lowercase
 
-    def loadOtherWord(self, wordlist):
+    def loadOtherWord(self, wordlist=None):
         while True:
             self.secretWord = random.choice(wordlist).lower()
             if self.differentLetters() <= self.guesses:
@@ -90,15 +90,16 @@ class Word:
             print '*****************************'
         else:
             print 'Sorry, you ran out of guesses.'
-            print 'The word was ', self.secretWord, '.'
+            print 'The word was', self.secretWord, '.'
 
-    def treatInput(self, letter):
-        #Trata os espacos de entrada
+    def treatInput(self, letter=''):
+        # Trata os espacos de entrada
         letter = ''.join(letter.split())
-        #Trata as letras Maiusculas
+        # Trata as letras Maiusculas
         letter = letter.lower()
 
         return letter
+
 
 def hangman():
 
